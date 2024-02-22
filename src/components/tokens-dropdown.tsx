@@ -4,8 +4,6 @@ import { useClickOutside } from '@/hooks/use-click-outside';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 
-// TODO:
-// check for the dark tailwind classes and how they behave
 // Refactor: Generic dropdown supporting image (optional), title (required)
 const TokensDropdown = ({ tokens, selectedToken, emitToken }: ITokensDropdownConfig) => {
   const DropdownRef = useRef<HTMLDivElement>(null);
@@ -26,8 +24,8 @@ const TokensDropdown = ({ tokens, selectedToken, emitToken }: ITokensDropdownCon
   };
 
   return (
-    <div className="relative" ref={DropdownRef}>
-      <button onClick={handleToggle} data-dropdown-toggle="dropdown" type="button" className={`flex justify-between items-center border-2 border-transparent bg-zinc-900 w-full rounded-lg text-sm px-4 py-2.5 placeholder-gray-600 focus:outline-none focus:border-pink-500 ${isOpen ? '!rounded-b-none !border-b-transparent' : ""}`}>
+    <div className='relative' ref={DropdownRef}>
+      <button onClick={handleToggle} data-dropdown-toggle="dropdown" type="button" className={`flex justify-between items-center border-2 border-transparent bg-zinc-900 w-full rounded-lg text-sm px-4 py-2.5 placeholder-gray-600 focus:outline-none focus:border-pink-500 ${isOpen ? '!rounded-b-none !border-b-transparent' : ''}`}>
         <div className="flex items-center">
           <Image className='bg-white mr-2 p-0.5 rounded-sm' src={selectedToken.icon} alt="logo" width={20} height={20} />
           <span>{selectedToken.name}</span>
@@ -53,8 +51,8 @@ const TokensDropdown = ({ tokens, selectedToken, emitToken }: ITokensDropdownCon
               </li>))}
             </ul>
           </div>
-          : <></>
-      }
+          :
+          <></>}
     </div>
   );
 };

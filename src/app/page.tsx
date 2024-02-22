@@ -2,6 +2,7 @@ import { RequestForm } from '@/components/request-form';
 import { NearLogo } from '@/components/near-logo';
 
 export default function Home() {
+  // TODO: Figure whether the layout is not more appropriate for the layout.tsx (oops...)
   return (
     <main className='w-full container mx-auto flex items-center justify-center min-h-screen'>
       <div className='p-4 lg:p-0 lg:w-3/4 w-full items-center flex flex-col space-y-5 lg:items-start lg:flex-row lg:space-x-20 justify-center'>

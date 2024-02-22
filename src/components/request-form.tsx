@@ -10,10 +10,8 @@ import { useFaucet } from '@/hooks/use-faucet';
 import { TransactionIndicator } from './transaction-indicator';
 import { DEFAULT_INDICATOR_CONFIG } from '@/consts';
 
-
-// TODO:
-// Make all quotes the same
-// Load the component once you get the tokens list
+// TODO: Load the component once you get the tokens list
+// TODO: Maybe extract the form template in a separate component
 // Refactor: Include token in the form
 export const RequestForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +29,7 @@ export const RequestForm = () => {
     });
 
   useEffect(() => {
-    setValue("amount", selectedToken.requestAllowance);
+    setValue('amount', selectedToken.requestAllowance);
   }, [selectedToken, setValue]);
 
   const onSubmit = async (formValues: IReqForm) => {
@@ -43,7 +41,7 @@ export const RequestForm = () => {
 
     try {
       const res = await requestFunds(formValues);
-      setIndicatorConfig({ type: res.error ? "error" : "success", txh: res.txh, body: res.error || "" });
+      setIndicatorConfig({ type: res.error ? 'error' : 'success', txh: res.txh, body: res.error || '' });
       setIsMessageOpen(true);
     } catch (error) {
       console.error(error);
@@ -90,7 +88,7 @@ export const RequestForm = () => {
                 className={`border-2 border-transparent bg-zinc-900 w-full rounded-lg text-sm px-4 py-2.5 placeholder-gray-600 focus:outline-none focus:border-pink-500 ${errors.account?.message ? '!border-red-400' : ''}`}
                 type="text"
                 {
-                ...register("account", {
+                ...register('account', {
                   required: true,
                   minLength: 1,
                   validate: (value) => isAccountValid(value) || 'Invalid account'
@@ -111,7 +109,7 @@ export const RequestForm = () => {
                 className={`border-2 border-transparent bg-zinc-900 w-full rounded-lg text-sm px-4 py-2.5 placeholder-gray-600 focus:outline-none focus:border-pink-500 ${errors.amount?.message ? '!border-red-400' : ''}`}
                 type="text"
                 {
-                ...register("amount",
+                ...register('amount',
                   {
                     required: true,
                     minLength: 1,

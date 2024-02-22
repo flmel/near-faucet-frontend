@@ -12,9 +12,9 @@ export const useFaucet = () => {
     const getTokens = async () => {
       try {
         const res = await fetch('/api/faucet/tokens', {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
 
@@ -34,9 +34,9 @@ export const useFaucet = () => {
 
     try {
       const res = await fetch('/api/faucet/tokens', {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(fundsReq)
       });

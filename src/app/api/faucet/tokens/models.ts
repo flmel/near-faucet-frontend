@@ -1,7 +1,6 @@
 import { FinalExecutionOutcome } from 'near-api-js/lib/providers';
 import { NextRequest } from 'next/server';
 
-
 export interface ITokenDTO {
   ft_config: {
     ft_request_allowance: number,
