@@ -1,8 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import localFont from 'next/font/local';
 
-const inter = Inter({ subsets: ["latin"] });
+const monaSans = localFont({
+  src: [
+    {
+      path: '../../public/fonts/MonaSans-Medium.ttf',
+      weight: '400'
+    },
+    {
+      path: '../../public/fonts/MonaSans-SemiBold.ttf',
+      weight: '600'
+    }
+  ],
+  variable: '--font-mona-sans'
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${monaSans.variable} font-sans bg-gradient-to-r from-blue-800 to-pink-500 text-white`}>{children}</body>
     </html>
   );
 }

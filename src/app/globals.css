@@ -3,27 +3,61 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --body-top-padding: 24px;
+  -webkit-font-smoothing: antialiased;
+  /* --base-rgb: 255, 255, 255; 
+  --pink-100-rgb: 173, 1, 171; 
+  --pink-200-rgb: 153,7,161;
+  --grey-rgb: 16, 23, 41;
+  --blue-rgb: 15, 51, 92; */
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* color: rgb(var(--base-rgb));
+  background: radial-gradient(circle 
+  farthest-corner at 83.7% 4.3%,
+  rgb(var(--pink-100-rgb)) 0,
+  rgb(var(--blue-rgb)) 90%); */
+}
+
+.form {
+  /* background: rgba(173, 1, 171, 0.08); */
+  background: radial-gradient(circle 
+  farthest-corner at 60.7% 4.3%,
+  rgb(255, 255, 255, 0) 20%,
+  rgba(0, 242, 255, 0.2) 100%);
+  position: relative;
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.5px);
+-webkit-backdrop-filter: blur(4.5px);
+border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.form::before {    
+  content: "";
+  background: radial-gradient(circle 
+  farthest-corner at 83.7% 4.3%,
+  rgb(255, 255, 255, 0) 20%,
+  rgb(152, 249, 255, 0.25) 100%);
+  background-image:url('../../public/imgs/noise.jpeg');
+  /* background-image: url('https://placekitten.com/1200/800'); */
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.05;
+  z-index: -1;
 }
 
 @layer utilities {
@@ -31,3 +65,53 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 60px;
+  aspect-ratio: 1;
+  --g: conic-gradient(from -90deg at 10px 10px,#fff 90deg,#0000 0);
+  background: var(--g), var(--g), var(--g);
+  background-size: 50% 50%;
+  animation: l16 1s infinite;
+}
+@keyframes l16 {
+   0%   {background-position:0    0   ,10px 10px,20px 20px} 
+   50%  {background-position:0    20px,10px 10px,20px 0   } 
+   100% {background-position:20px 20px,10px 10px,0    0   } 
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn ease 300ms;
+}
+
+
+/* @keyframes slideaway {
+  from { display: inherit; }
+  to { transform: translateY(40px); opacity: 0;}
+}
+
+@keyframes slidein {
+  from { display: none; }
+  to { transform: translateY(40px); opacity: 1;}
+} */
+
+/* .show {
+  animation: slidein 100ms;
+  display: block;
+}
+
+.hide {
+  animation: slideaway 200ms;
+  display: none;
+} */
