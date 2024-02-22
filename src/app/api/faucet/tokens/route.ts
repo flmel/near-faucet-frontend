@@ -1,14 +1,14 @@
-import { connectToNearAccount } from '@/lib/near';
 import { NextResponse } from 'next/server';
 import { RequestTokensApiRequest } from './models';
 import { TypedError } from 'near-api-js/lib/utils/errors';
-import { ExecutionStatus } from 'near-api-js/lib/providers/provider';
+import { ExecutionOutcomeWithId, ExecutionStatus } from 'near-api-js/lib/providers/provider';
+import { connectToFaucet } from '@/lib/near';
 
 export async function GET() {
-  await connectToNearAccount();
+  const faucet = await connectToFaucet();
 
   try {
-    const tokens = await nearAccount.viewFunction({ contractId: process.env.NEAR_FAUCET_ID, methodName: "ft_list_tokens" });
+    const tokens = await faucet.ft_list_tokens();
     return NextResponse.json({ tokens });
   } catch (err) {
     // TODO: handle error
@@ -16,34 +16,30 @@ export async function GET() {
   }
 }
 
+
 export async function POST(req: RequestTokensApiRequest) {
-  await connectToNearAccount();
+  const faucet = await connectToFaucet();
 
   const data = await req.json();
   const { amount, receiverId, contractId } = data;
 
   try {
     const result = contractId === 'near_faucet' ?
-      // TODO: extract gas in CONST
-      // TODO: create a wrapper around nearAccount function and view calls to avoid repetitiveness and to type the methodNames
-      await nearAccount.functionCall({ contractId: process.env.NEAR_FAUCET_ID, methodName: "request_near", args: { request_amount: amount, receiver_id: receiverId }, gas: '300000000000000' })
+      await faucet.request_near({ request_amount: amount, receiver_id: receiverId })
       :
-      await nearAccount.functionCall({ contractId: process.env.NEAR_FAUCET_ID, methodName: "ft_request_funds", args: { amount, receiver_id: receiverId, ft_contract_id: contractId }, gas: '300000000000000' });
+      await faucet.ft_request_funds({ amount, receiver_id: receiverId, ft_contract_id: contractId });
 
     const { transaction_outcome: txo } = result;
-    const status = txo.outcome.status as ExecutionStatus;
 
-    const tx = status && 'SuccessReceiptId' in status ? status.SuccessReceiptId : "";
-
-    return NextResponse.json({ tx });
+    return NextResponse.json({ txh: txo.id }, { status: 200 });
   } catch (err: unknown) {
     if (err instanceof TypedError) {
       switch (err.type) {
         case 'FunctionCallError':
-          const error: TypedError & { kind: { ExecutionError?: string; }; } = err as any; // need to type as any since there is no type for the model that is actually returned
-          return Response.json({ error: error.kind.ExecutionError || 'There was a function call error.' }, { status: 405 });
+          const error: TypedError & { kind: { ExecutionError?: string; }, transaction_outcome: ExecutionOutcomeWithId; } = err as any; // need to type as any since there is no type for the model that is actually returned
+          return NextResponse.json({ error: error.kind.ExecutionError || 'There was a function call error.', txh: error.transaction_outcome.id }, { status: 405 });
         default:
-          return Response.json({ error: "There was an error", type: err.type, context: err.context }, { status: 520 });
+          return NextResponse.json({ error: "There was an error", type: err.type, context: err.context }, { status: 520 });
       }
     }
   }

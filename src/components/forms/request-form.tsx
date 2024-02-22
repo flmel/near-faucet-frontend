@@ -10,18 +10,14 @@ import { useFaucet } from '@/hooks/use-faucet';
 import Image from 'next/image';
 
 // TODO:
-// Loading indicators
-// Error handling
-// Success message
+// Responsiveness
+// Put messages and loading in separate components
 // Refactor: Include token in the form
 export const RequestForm = () => {
   const { tokens, selectedToken, requestFunds, setSelectedToken } = useFaucet();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ isOpen: false, type: "", txh: "" });
-  const { register,
-    handleSubmit,
-    setValue,
-    reset,
+  const { register, handleSubmit, setValue, reset,
     formState: { errors, isDirty, isValid } } = useForm<IReqForm>({
       mode: 'onChange',
       defaultValues: {
@@ -38,15 +34,19 @@ export const RequestForm = () => {
     if (!isValid || !isDirty) {
       return;
     }
+
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setMessage({ isOpen: true, type: "success", txh: "alala" });
+
+    try {
+      const res = await requestFunds(formValues);
+      setMessage({ isOpen: true, type: res.error ? "failure" : "success", txh: res.txh });
       reset();
-    }, 3000);
-    // const res = await requestFunds(formValues);
-    // isLoading(false);
-    // display success message on success or error
+    } catch (error) {
+      console.error(error);
+    }
+
+    reset();
+    setIsLoading(false);
   };
 
   const closeMessage = () => {
@@ -63,25 +63,25 @@ export const RequestForm = () => {
       {!isLoading && message.isOpen && message.type === 'success' ? <div className={'fadeIn'}>
         <div className='flex flex-col items-center text-center'>
           <h4 className='text-4xl text-green-400 uppercase font-medium'>Success</h4>
-          <p className='mb-5 text-xs'>Check the transaction for more details</p>
-          <Image src="svgs/success-illustration.svg" width={250} height={250} alt='Success illustration' />
-          <div className='mt-4 text-lg flex items-center mb-8'>
+          <p className='text-xs'>Check the transaction for more details</p>
+          <Image className='mt-5' src="svgs/success-illustration.svg" width={250} height={250} alt='Success illustration' />
+          <div className='mt-4 text-lg flex items-center'>
             <Image className="mr-2" src="icons/arrow-right.svg" alt="Arrow right" width={18} height={18} />
-            <a className='underline' href={`https://testnet.nearblocks.io/txns/${message.txh}`}>Go to the transaction</a>
+            <a className='underline' href={`https://testnet.nearblocks.io/txns/${message.txh}`} target='_blank'>Go to the transaction</a>
           </div>
-          <button type="reset" className='bg-pink-600 hover:bg-pink-500 rounded px-10 py-2 text-lg shadow-inner' onClick={() => closeMessage()}>Close</button>
+          <button type="reset" className='mt-8 bg-pink-600 hover:bg-pink-500 rounded px-10 py-2 text-lg shadow-inner' onClick={() => closeMessage()}>Close</button>
         </div>
       </div> : <></>}
       {!isLoading && message.isOpen && message.type === 'failure' ? <div className={'fadeIn'}>
         <div className='flex flex-col items-center text-center'>
           <h4 className='text-4xl text-red-400 uppercase font-medium'>Error</h4>
-          <p className='mb-5 text-xs'>Check the transaction for more details</p>
-          <Image src="svgs/failure-illustration.svg" width={250} height={250} alt='Failure illustration' />
-          <div className='mt-4 text-lg flex items-center mb-8'>
+          {message.txh ? <p className='text-xs'>Check the transaction for more details</p> : <></>}
+          <Image className="mt-5" src="svgs/failure-illustration.svg" width={250} height={250} alt='Failure illustration' />
+          {message.txh ? <div className='mt-4 text-lg flex items-center'>
             <Image className="mr-2" src="icons/arrow-right.svg" alt="Arrow right" width={18} height={18} />
-            <a className='underline' href={`https://testnet.nearblocks.io/txns/${message.txh}`}>Go to the transaction</a>
-          </div>
-          <button type="reset" className='bg-pink-600 hover:bg-pink-500 rounded px-10 py-2 text-lg shadow-inner' onClick={() => closeMessage()}>Close</button>
+            <a className='underline' href={`https://testnet.nearblocks.io/txns/${message.txh}`} target='_blank'>Go to the transaction</a>
+          </div> : <></>}
+          <button type="reset" className='mt-8 bg-pink-600 hover:bg-pink-500 rounded px-10 py-2 text-lg shadow-inner' onClick={() => closeMessage()}>Try again</button>
         </div>
       </div> : <></>}
       {!isLoading && !message.isOpen ? <form className={`fadeIn`} onSubmit={handleSubmit(onSubmit)}>
@@ -142,8 +142,6 @@ export const RequestForm = () => {
         <div className='text-center'>
           <button className='bg-pink-600 hover:bg-pink-500 rounded px-10 py-2 text-lg shadow-inner' type="submit">Request</button>
         </div>
-        {/* <button className="text-slate-900 bg-fuchsia-600 pr-16 pl-2 hover:bg-fuchsia-500 transition-bg duration-500 rounded-r hidden md:inline-block" type="submit" disabled={!isDirty || !isValid}>Request</button> */}
-        {/* <button className="text-slate-900 bg-fuchsia-600 mt-4 py-4 hover:bg-fuchsia-500 transition-bg duration-500 rounded  w-full md:hidden" type="submit" disabled={!isDirty || !isValid}>Request</button> */}
       </form> : <></>}
     </div>
   );

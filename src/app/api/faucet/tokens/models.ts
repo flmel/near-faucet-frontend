@@ -1,4 +1,4 @@
-import { Contract } from 'near-api-js';
+import { FinalExecutionOutcome } from 'near-api-js/lib/providers';
 import { NextRequest } from 'next/server';
 
 
@@ -19,10 +19,10 @@ export interface ITokenDTO {
   ft_contract_id: string;
 }
 
-export interface FaucetContract extends Contract {
+export interface FaucetContract {
   ft_list_tokens: () => Promise<ITokenDTO[]>;
-  request_near: (body: { args: { request_amount: string, receiver_id: string; }; }) => Promise<unknown>;
-  ft_request_funds: (body: { args: { amount: string, receiver_id: string, ft_contract_id: string; }; }) => Promise<unknown>;
+  request_near: (args: { request_amount: string, receiver_id: string; }) => Promise<FinalExecutionOutcome>;
+  ft_request_funds: (args: { amount: string, receiver_id: string, ft_contract_id: string; }) => Promise<FinalExecutionOutcome>;
 }
 
 export interface RequestTokensApiRequest extends NextRequest {
