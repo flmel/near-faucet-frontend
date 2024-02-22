@@ -2,34 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --body-top-padding: 24px;
-  -webkit-font-smoothing: antialiased;
-  /* --base-rgb: 255, 255, 255; 
-  --pink-100-rgb: 173, 1, 171; 
-  --pink-200-rgb: 153,7,161;
-  --grey-rgb: 16, 23, 41;
-  --blue-rgb: 15, 51, 92; */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-} */
-
-body {
-  /* color: rgb(var(--base-rgb));
-  background: radial-gradient(circle 
-  farthest-corner at 83.7% 4.3%,
-  rgb(var(--pink-100-rgb)) 0,
-  rgb(var(--blue-rgb)) 90%); */
-}
-
+/* Migrate to tailwind classes */
 .form {
-  /* background: rgba(173, 1, 171, 0.08); */
   background: radial-gradient(circle 
   farthest-corner at 60.7% 4.3%,
   rgb(255, 255, 255, 0) 20%,
@@ -49,7 +28,6 @@ border: 1px solid rgba(255, 255, 255, 0.4);
   rgb(255, 255, 255, 0) 20%,
   rgb(152, 249, 255, 0.25) 100%);
   background-image:url('../../public/imgs/noise.jpeg');
-  /* background-image: url('https://placekitten.com/1200/800'); */
   background-size: cover;
   position: absolute;
   top: 0px;
@@ -60,14 +38,6 @@ border: 1px solid rgba(255, 255, 255, 0.4);
   z-index: -1;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-
-/* HTML: <div class="loader"></div> */
 .loader {
   width: 60px;
   aspect-ratio: 1;
@@ -90,28 +60,3 @@ border: 1px solid rgba(255, 255, 255, 0.4);
     opacity: 1;
   }
 }
-
-.fadeIn {
-  animation: fadeIn ease 300ms;
-}
-
-
-/* @keyframes slideaway {
-  from { display: inherit; }
-  to { transform: translateY(40px); opacity: 0;}
-}
-
-@keyframes slidein {
-  from { display: none; }
-  to { transform: translateY(40px); opacity: 1;}
-} */
-
-/* .show {
-  animation: slidein 100ms;
-  display: block;
-}
-
-.hide {
-  animation: slideaway 200ms;
-  display: none;
-} */

@@ -48,10 +48,12 @@ export const useFaucet = () => {
   };
 
   const setSelectedToken = (token: IToken) => setToken(token);
+  const resetSelectedToken = () => setToken(NEAR_TOKEN);
 
   return {
     tokens,
     selectedToken,
+    resetSelectedToken,
     setSelectedToken,
     requestFunds
   };

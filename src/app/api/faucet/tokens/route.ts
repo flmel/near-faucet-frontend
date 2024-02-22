@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { RequestTokensApiRequest } from './models';
 import { TypedError } from 'near-api-js/lib/utils/errors';
-import { ExecutionOutcomeWithId, ExecutionStatus } from 'near-api-js/lib/providers/provider';
+import { ExecutionOutcomeWithId } from 'near-api-js/lib/providers/provider';
 import { connectToFaucet } from '@/lib/near';
 
 export async function GET() {
@@ -11,11 +11,9 @@ export async function GET() {
     const tokens = await faucet.ft_list_tokens();
     return NextResponse.json({ tokens });
   } catch (err) {
-    // TODO: handle error
-    throw err;
+    return NextResponse.json({ error: "Error occured" }, { status: 400 });
   }
 }
-
 
 export async function POST(req: RequestTokensApiRequest) {
   const faucet = await connectToFaucet();
@@ -25,8 +23,7 @@ export async function POST(req: RequestTokensApiRequest) {
 
   try {
     const result = contractId === 'near_faucet' ?
-      await faucet.request_near({ request_amount: amount, receiver_id: receiverId })
-      :
+      await faucet.request_near({ request_amount: amount, receiver_id: receiverId }) :
       await faucet.ft_request_funds({ amount, receiver_id: receiverId, ft_contract_id: contractId });
 
     const { transaction_outcome: txo } = result;
@@ -37,7 +34,8 @@ export async function POST(req: RequestTokensApiRequest) {
       switch (err.type) {
         case 'FunctionCallError':
           const error: TypedError & { kind: { ExecutionError?: string; }, transaction_outcome: ExecutionOutcomeWithId; } = err as any; // need to type as any since there is no type for the model that is actually returned
-          return NextResponse.json({ error: error.kind.ExecutionError || 'There was a function call error.', txh: error.transaction_outcome.id }, { status: 405 });
+
+          return NextResponse.json({ error: error.kind.ExecutionError || 'There was a function call error.', txh: error.transaction_outcome.id }, { status: 400 });
         default:
           return NextResponse.json({ error: "There was an error", type: err.type, context: err.context }, { status: 520 });
       }

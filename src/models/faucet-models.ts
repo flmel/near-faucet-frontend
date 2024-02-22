@@ -17,3 +17,18 @@ export interface IRequestFundsDetailsDTO {
   receiverId: string,
   contractId: string;
 }
+
+
+type TransactionIndicatorType = 'success' | 'error' | '';
+export interface ITransactionIndicatorConfig {
+  type: TransactionIndicatorType, txh: string, body?: string;
+}
+
+export interface ITransactionIndicatorUI {
+  img: string;
+  title: TransactionIndicatorType,
+  body: string,
+  txh: string;
+  textColor: 'text-green-400' | 'text-red-400',
+  buttonText: 'Close' | 'Try again';
+}

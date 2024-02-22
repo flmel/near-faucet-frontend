@@ -1,4 +1,4 @@
-import { RequestForm } from '@/components/forms/request-form';
+import { RequestForm } from '@/components/request-form';
 import { NearLogo } from '@/components/near-logo';
 
 export default function Home() {

@@ -9,3 +9,6 @@ export const NEAR_TOKEN: IToken = {
   symbol: "NEAR",
   decimals: 24
 };
+
+export const DEFAULT_INDICATOR_CONFIG = { type: "" as const, txh: "", body: "" };
+export const EXEC_GAS = '300000000000000';
