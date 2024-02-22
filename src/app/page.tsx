@@ -2,16 +2,16 @@ import { RequestForm } from '@/components/request-form';
 import { NearLogo } from '@/components/near-logo';
 
 export default function Home() {
-  // TODO: make it responsive
-  // TODO: scaling
   return (
-    <main className="block md:flex min-h-screen justify-between pt-40 px-80">
-      <section className='w-1/2 sm:w-full'>
-        <NearLogo />
-      </section>
-      <section className='w-1/2 sm:w-full'>
-        <RequestForm />
-      </section>
+    <main className='w-full container mx-auto flex items-center justify-center min-h-screen'>
+      <div className='p-4 lg:p-0 lg:w-3/4 w-full items-center flex flex-col space-y-5 lg:items-start lg:flex-row lg:space-x-20 justify-center'>
+        <section>
+          <NearLogo />
+        </section>
+        <section className='w-full lg:w-5/12 md:w-2/3'>
+          <RequestForm />
+        </section>
+      </div>
     </main>
   );
 }

@@ -6,7 +6,6 @@ export const TransactionIndicator = ({ config, closeMessage }: { config: ITransa
   const [message, setMessage] = useState<ITransactionIndicatorUI | null>(null);
 
   useEffect(() => {
-    console.log("when im here");
     const message = {
       img: `svgs/${config.type}-illustration.svg`,
       title: config.type,
@@ -21,7 +20,7 @@ export const TransactionIndicator = ({ config, closeMessage }: { config: ITransa
 
 
 
-  return message ? <div className='flex flex-col items-center text-center'>
+  return message ? <div className='flex flex-col items-center text-center w-full'>
     <h4 className={`text-4xl uppercase font-medium ${message.textColor}`}>{message.title}</h4>
     <p className='text-xs'>{message.body}</p>
     <Image className='mt-5' src={message.img} width={250} height={250} alt={`${message.title} illustration`} />

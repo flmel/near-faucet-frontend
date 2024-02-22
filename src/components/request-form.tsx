@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IReqForm, IToken, ITransactionIndicator } from '@/models/faucet-models';
+import { IReqForm, IToken, ITransactionIndicatorConfig } from '@/models/faucet-models';
 import TokensDropdown from './tokens-dropdown';
 import { ErrorMessage } from '@hookform/error-message';
 import { isAccountValid, isAmountValid } from '../utils/form-validators';
@@ -12,15 +12,13 @@ import { DEFAULT_INDICATOR_CONFIG } from '@/consts';
 
 
 // TODO:
-// Responsiveness
-// Put messages and loading in separate components
-// Make all qotes the same
+// Make all quotes the same
 // Load the component once you get the tokens list
 // Refactor: Include token in the form
 export const RequestForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMessageOpen, setIsMessageOpen] = useState(false);
-  const [indicatorConfig, setIndicatorConfig] = useState<ITransactionIndicator>(DEFAULT_INDICATOR_CONFIG);
+  const [indicatorConfig, setIndicatorConfig] = useState<ITransactionIndicatorConfig>(DEFAULT_INDICATOR_CONFIG);
   const { tokens, selectedToken, requestFunds, setSelectedToken, resetSelectedToken } = useFaucet();
 
   const { register, handleSubmit, setValue, reset,
@@ -67,12 +65,13 @@ export const RequestForm = () => {
 
 
   return (
-    <div className='form pt-10 px-14 pb-12 w-4/5 min-h-[550px] flex justify-center items-center'>
+    // TODO: change the absolute px values to something else (what else? :()
+    <div className='form px-6 py-5 md:py-10 md:px-14 min-w-full min-h-[460px] md:min-h-[544px] flex justify-center items-center'>
       {isLoading && !isMessageOpen ? <div className='animate-fade-in'><div className='loader'></div></div> : <></>}
       {!isLoading && isMessageOpen ? <div className='animate-fade-in'><TransactionIndicator config={indicatorConfig} closeMessage={closeMessage} /></div> : <></>}
       {!isLoading && !isMessageOpen ?
         <form className='animate-fade-in' onSubmit={handleSubmit(onSubmit)}>
-          <div className='pr-10'>
+          <div className='pr-10 hidden md:block'>
             <h2 className='font-semibold text-3xl mb-2'>Get testnet tokens</h2>
             <p className="text-md mb-12">Use this faucet to request testnet NEAR or provided Fungible Tokens</p>
           </div>

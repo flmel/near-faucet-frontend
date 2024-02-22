@@ -32,3 +32,9 @@ export interface ITransactionIndicatorUI {
   textColor: 'text-green-400' | 'text-red-400',
   buttonText: 'Close' | 'Try again';
 }
+
+export interface ITokensDropdownConfig {
+  tokens: IToken[],
+  selectedToken: IToken,
+  emitToken: (token: IToken) => void;
+}

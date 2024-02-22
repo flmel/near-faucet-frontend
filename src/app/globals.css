@@ -7,7 +7,11 @@ input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
 
-/* Migrate to tailwind classes */
+html, body {
+  width: 100%;
+}
+
+/* TODO: Migrate to tailwind classes */
 .form {
   background: radial-gradient(circle 
   farthest-corner at 60.7% 4.3%,
