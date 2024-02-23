@@ -7,31 +7,31 @@ input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
 
-html, body {
+html,
+body {
   width: 100%;
+  @apply no-scrollbar
 }
 
 /* TODO: Migrate to tailwind classes */
 .form {
-  background: radial-gradient(circle 
-  farthest-corner at 60.7% 4.3%,
-  rgb(255, 255, 255, 0) 20%,
-  rgba(0, 242, 255, 0.2) 100%);
+  background: radial-gradient(circle farthest-corner at 60.7% 4.3%,
+      rgb(255, 255, 255, 0) 20%,
+      rgba(0, 242, 255, 0.2) 100%);
   position: relative;
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(4.5px);
--webkit-backdrop-filter: blur(4.5px);
-border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.form::before {    
+.form::before {
   content: "";
-  background: radial-gradient(circle 
-  farthest-corner at 83.7% 4.3%,
-  rgb(255, 255, 255, 0) 20%,
-  rgb(152, 249, 255, 0.25) 100%);
-  background-image:url('../../public/imgs/noise.jpeg');
+  background: radial-gradient(circle farthest-corner at 83.7% 4.3%,
+      rgb(255, 255, 255, 0) 20%,
+      rgb(152, 249, 255, 0.25) 100%);
+  background-image: url('../../public/imgs/noise.jpeg');
   background-size: cover;
   position: absolute;
   top: 0px;
@@ -45,21 +45,31 @@ border: 1px solid rgba(255, 255, 255, 0.4);
 .loader {
   width: 60px;
   aspect-ratio: 1;
-  --g: conic-gradient(from -90deg at 10px 10px,#fff 90deg,#0000 0);
+  --g: conic-gradient(from -90deg at 10px 10px, #fff 90deg, #0000 0);
   background: var(--g), var(--g), var(--g);
   background-size: 50% 50%;
   animation: l16 1s infinite;
 }
+
 @keyframes l16 {
-   0%   {background-position:0    0   ,10px 10px,20px 20px} 
-   50%  {background-position:0    20px,10px 10px,20px 0   } 
-   100% {background-position:20px 20px,10px 10px,0    0   } 
+  0% {
+    background-position: 0 0, 10px 10px, 20px 20px
+  }
+
+  50% {
+    background-position: 0 20px, 10px 10px, 20px 0
+  }
+
+  100% {
+    background-position: 20px 20px, 10px 10px, 0 0
+  }
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
