@@ -10,7 +10,6 @@ input:-webkit-autofill:focus {
 html,
 body {
   width: 100%;
-  @apply no-scrollbar
 }
 
 /* TODO: Migrate to tailwind classes */
