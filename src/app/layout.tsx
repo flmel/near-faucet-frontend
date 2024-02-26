@@ -21,6 +21,9 @@ const monaSans = localFont({
 export const metadata: Metadata = {
   title: 'NEAR TESTNET Faucet',
   description: 'Use this faucet to request testnet NEAR or provided Fungible Tokens',
+  icons: {
+    icon: '/svgs/near-faucet-logo.svg'
+  }
 };
 
 export default function RootLayout({
