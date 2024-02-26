@@ -41,7 +41,7 @@ const TokensDropdown = ({ tokens, selectedToken, emitToken }: ITokensDropdownCon
       {/* <!-- Dropdown menu --> */}
       {
         isOpen ?
-          <div id="dropdown" className={`z-10 absolute -mt-1 transition-all bg-white max-h-64 overflow-scroll rounded-lg rounded-t-none shadow w-full border-2 border-pink-500 border-t-transparent border-t-0`}>
+          <div id="dropdown" className={`z-10 absolute -mt-1 transition-all bg-white max-h-64 overflow-auto rounded-lg rounded-t-none shadow w-full border-2 border-pink-500 border-t-transparent border-t-0`}>
             <ul className="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
               {tokens.map((t, i) => (<li key={i} className={`${t.contractId === selectedToken.contractId ? 'bg-pink-500 text-white' : 'text-zinc-900 hover:text-white'}`}>
                 <button onClick={() => selectToken(t)} className="flex px-4 py-2 w-full hover:bg-blue-900">
