@@ -1,5 +1,5 @@
 export const isAccountValid = (account: string) => {
-  return isAccountExplicit(account) || isAccountImplicit(account) || isAccountDev(account);
+  return isAccountExplicit(account) || isAccountDev(account);
 };
 
 export const isAmountValid = (amount: string) => {
