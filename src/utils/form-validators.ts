@@ -11,10 +11,10 @@ const isAccountExplicit = (account: string) => {
   return new RegExp(/^([A-Za-z\d]+[\-_])*[A-Za-z\d]+\.testnet$/).test(account);
 };
 
-const isAccountImplicit = (account: string) => {
-  return new RegExp(/^[a-zA-Z0-9]{64}$/).test(account);
-};
+// const isAccountImplicit = (account: string) => {
+//   return new RegExp(/^[a-zA-Z0-9]{64}$/).test(account);
+// };
 
 const isAccountDev = (account: string) => {
-  return new RegExp(/^[a-zA-Z0-9]{64}$/).test(account);
+  return new RegExp(/^dev-\d{13}-\d{14}$/).test(account);
 };
