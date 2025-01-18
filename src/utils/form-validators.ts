@@ -8,7 +8,7 @@ export const isAmountValid = (amount: string) => {
 
 const isAccountExplicit = (account: string) => {
   // eslint-disable-next-line no-useless-escape
-  return new RegExp(/^([A-Za-z\d]+[\-_])*[A-Za-z\d]+\.testnet$/).test(account);
+  return new RegExp(/^((?!\.)[A-Za-z\d]+(?:[\-_][A-Za-z\d]+)*\.)*(?:testnet)$/).test(account);
 };
 
 // const isAccountImplicit = (account: string) => {
